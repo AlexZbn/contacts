@@ -35,6 +35,8 @@ html, body, #root {
 	display: block;
 	cursor: default;
 	text-overflow: ellipsis;
+	white-space: nowrap;
+	overflow: hidden;
 }
 
 .contacts-list-group-title {
