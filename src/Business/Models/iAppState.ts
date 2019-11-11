@@ -8,5 +8,5 @@ export interface IAppState {
 	appMode: AppMode;
 	newContactInitialState?: IContact;
 	error?: string;
-	thereAreDataChanges: boolean;
+	thereArePendingChanges: boolean;
 };

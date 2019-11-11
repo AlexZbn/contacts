@@ -7,27 +7,27 @@ export interface IContactViewerProps {
 	dispatch(action: IReducerAction): void
 }
 
-function ContactDataItem(props: {label: string, children: any}) {
+function ContactDataItem(props: { label: string, children: any }) {
 	return <div className={"details-item"}><div className={"label"}>{props.label}</div><div className={"value"}>{props.children}</div></div>
 }
 
 export const ContactViewer: React.FC<IContactViewerProps> = (props) => {
-	const {contact, dispatch} = props;
+	const { contact, dispatch } = props;
 
 	return (
 		<>
 			<div className={"contact-details-container"}>
-				{!contact 
-				? <div>Not selected</div> 
-				: <>
-					<div className={"contact-full-name-block"}>
-						<p className={"contact-full-name"}>{contact.fullName}</p>
-					</div>
-					<ContactDataItem label="phone">{contact.phone}</ContactDataItem>
-					<ContactDataItem label="email"><a href="mailto:adam.acer@gmail.com">{contact.email}</a></ContactDataItem>
-					<ContactDataItem label="address">{contact.address}</ContactDataItem>
-					<ContactDataItem label="note">{contact.note}</ContactDataItem>
-				</>
+				{!contact
+					? <div>Not selected</div>
+					: <>
+						<div className={"contact-full-name-block"}>
+							<p className={"contact-full-name"}>{contact.fullName}</p>
+						</div>
+						<ContactDataItem label="phone">{contact.phone}</ContactDataItem>
+						<ContactDataItem label="email"><a href="mailto:adam.acer@gmail.com">{contact.email}</a></ContactDataItem>
+						<ContactDataItem label="address">{contact.address}</ContactDataItem>
+						<ContactDataItem label="note">{contact.note}</ContactDataItem>
+					</>
 				}
 			</div>
 			<div className={"action-buttons-container"}>

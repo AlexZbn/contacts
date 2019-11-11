@@ -7,7 +7,7 @@ export const actionTypes: {
 	readonly startNewContactAction: string,
 	readonly applyContactChangesAndStartNewContactAction: string;
 	readonly errorWasHandled: string;
-	readonly thereAreDataChanges: string;
+	readonly thereArePendingChanges: string;
 	readonly cancelEditing: string;
 } = {
 	refreshContactsAction: "refreshContacts",
@@ -18,6 +18,6 @@ export const actionTypes: {
 	startNewContactAction: "startNewContact",
 	applyContactChangesAndStartNewContactAction: "applyContactChangesAndStartNewContactAction",
 	errorWasHandled: "errorWasHandled",
-	thereAreDataChanges: "thereAreDataChanges",
+	thereArePendingChanges: "thereArePendingChanges",
 	cancelEditing: "cancelEditing"
 };

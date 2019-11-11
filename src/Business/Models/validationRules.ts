@@ -17,29 +17,29 @@ export class ValidationRules {
 	}
 
 	public static isPhoneValid(phone: string | undefined) {
-		if(!phone) {
+		if (!phone) {
 			return true;
 		}
 		else {
-			return phone.length >= ValidationRules.minPhoneLength 
-				&& phone.length <= ValidationRules.maxPhoneLength 
+			return phone.length >= ValidationRules.minPhoneLength
+				&& phone.length <= ValidationRules.maxPhoneLength
 				&& /^\+?[0-9]{1,3}? *(?:\(?[0-9]{1,3}\)?)?[0-9 .-]{5,20}$/.test(phone)
 		}
 	}
 
 	public static isEmailValid(email: string | undefined) {
-		if(!email) {
+		if (!email) {
 			return true;
 		}
 		else {
-			return email.length >= ValidationRules.minEmailLength 
-				&& email.length <= ValidationRules.maxEmailLength 
+			return email.length >= ValidationRules.minEmailLength
+				&& email.length <= ValidationRules.maxEmailLength
 				&& /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(email);
 		}
 	}
 
 	public static isAddressValid(address: string | undefined) {
-		if(!address) {
+		if (!address) {
 			return true;
 		}
 		else {
@@ -48,7 +48,7 @@ export class ValidationRules {
 	}
 
 	public static isNoteValid(note: string | undefined) {
-		if(!note) {
+		if (!note) {
 			return true;
 		}
 		else {

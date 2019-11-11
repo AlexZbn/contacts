@@ -12,13 +12,13 @@ export interface IContactListItemProps {
 export const ContactListItem: React.FC<IContactListItemProps> = (props) => {
 	const { contact, isSelected, appMode, thereAreDataChanges, dispatch } = props;
 
-	const removeButtonClickHandler = useCallback(()=> {
+	const removeButtonClickHandler = useCallback(() => {
 		if (window.confirm(`Are you sure you want to remove '${contact.fullName}'`)) {
 			dispatch(removeContactAction(contact));
 		}
 	}, [contact, dispatch]);
 
-	const contactClickHandler = useCallback(()=> {
+	const contactClickHandler = useCallback(() => {
 		if (thereAreDataChanges) {
 			if (thereAreDataChanges && window.confirm("Discard changes?")) {
 				dispatch(cancelEditing());
@@ -32,11 +32,11 @@ export const ContactListItem: React.FC<IContactListItemProps> = (props) => {
 	}, [contact, dispatch, thereAreDataChanges]);
 
 	return (
-		isSelected 
-		? <li className={"contacts-list-item-selected"}>
-			{contact.fullName}
-			{appMode === AppMode.edit && <button className={"inline-circle-button minus-button"} onClick={removeButtonClickHandler}>-</button>}
-		  </li>
-		: <li className={"contacts-list-item"} onClick={contactClickHandler}>{contact.fullName}</li>
+		isSelected
+			? <li className={"contacts-list-item-selected"}>
+				{contact.fullName}
+				{appMode === AppMode.edit && <button className={"inline-circle-button minus-button"} onClick={removeButtonClickHandler}>-</button>}
+			</li>
+			: <li className={"contacts-list-item"} onClick={contactClickHandler}>{contact.fullName}</li>
 	);
 }

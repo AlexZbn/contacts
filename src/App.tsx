@@ -15,7 +15,7 @@ const App: React.FC = () => {
 	return (
 		<div className="app">
 			<div className={"contacts-list-panel"}>
-				<ContactList contacts={state.contacts} selectedContact={state.selectedContact} appMode={state.appMode} thereAreDataChanges={state.thereAreDataChanges} dispatch={dispatch} />
+				<ContactList contacts={state.contacts} selectedContact={state.selectedContact} appMode={state.appMode} thereAreDataChanges={state.thereArePendingChanges} dispatch={dispatch} />
 			</div>
 			<div className={"contact-details-panel"}>
 				{ state.appMode === AppMode.view

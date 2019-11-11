@@ -1,28 +1,28 @@
 import { AppMode, Contact, IAppState, IContact, IReducerAction, actionTypes } from "..";
 
-export const defaultState = { contacts: [], appMode: AppMode.view, thereAreDataChanges: false };
+export const defaultState = { contacts: [], appMode: AppMode.view, thereArePendingChanges: false };
 
 export function appStateReducer(state: IAppState, action: IReducerAction): IAppState {
 	// Reducers should provide new state every time, need to avoid object mutations
-	let nextState: IAppState = {...state};
+	let nextState: IAppState = { ...state };
 	nextState = contactListManagementReducer(nextState, action);
 	nextState = contactManagementReducer(nextState, action);
 	nextState = appModeReducer(nextState, action);
 	return nextState;
 }
 
-function contactListManagementReducer(state: IAppState, action: IReducerAction): IAppState{
-	switch(action.type) {
-		case actionTypes.refreshContactsAction: 
+function contactListManagementReducer(state: IAppState, action: IReducerAction): IAppState {
+	switch (action.type) {
+		case actionTypes.refreshContactsAction:
 			const contacts: Contact[] = action.payload;
 			state.contacts = contacts;
 			state.appMode = AppMode.view;
 			state.error = undefined;
 			state.newContactInitialState = undefined;
-			state.thereAreDataChanges = false;
+			state.thereArePendingChanges = false;
 			return state;
 		case actionTypes.removeContactAction:
-			if(state.appMode === AppMode.edit) {
+			if (state.appMode === AppMode.edit) {
 				const contactToRemove: Contact = action.payload;
 				const index = state.contacts.indexOf(contactToRemove);
 				state.contacts = state.contacts.reduce((prev, c) => { c.id !== contactToRemove.id && prev.push(c); return prev; }, [] as Contact[]);
@@ -40,47 +40,47 @@ function contactListManagementReducer(state: IAppState, action: IReducerAction):
 			state.error = undefined;
 			state.newContactInitialState = undefined;
 			state.appMode = AppMode.view;
-			state.thereAreDataChanges = false;
+			state.thereArePendingChanges = false;
 			return state;
 		case actionTypes.selectContactAction:
 			if (state.appMode === AppMode.view) {
 				const contactToSelect: Contact = action.payload;
 				const selectedContact = state.contacts.find(c => c === contactToSelect);
-				if(selectedContact) {
+				if (selectedContact) {
 					state.selectedContact = selectedContact;
 				}
 			}
 
 			return state;
-		default: 
+		default:
 			return state;
 	}
 }
 
 function contactManagementReducer(state: IAppState, action: IReducerAction): IAppState {
-	switch(action.type) {
+	switch (action.type) {
 		case actionTypes.applyContactChangesAction:
 			const contactParams: IContact = action.payload;
 			applyContactChanges(state, contactParams);
 			return state;
 		case actionTypes.applyContactChangesAndStartNewContactAction:
 			const contactParams1: IContact = action.payload;
-			applyContactChanges(state, contactParams1) 
-			&& startNewContact(state);
+			applyContactChanges(state, contactParams1)
+				&& startNewContact(state);
 			return state;
 		case actionTypes.errorWasHandled:
 			state.error = undefined;
 			return state;
-		case actionTypes.thereAreDataChanges:
-			state.thereAreDataChanges = true;
+		case actionTypes.thereArePendingChanges:
+			state.thereArePendingChanges = true;
 			return state;
-		default: 
+		default:
 			return state;
 	}
 }
 
-function appModeReducer(state: IAppState, action: IReducerAction): IAppState{
-	switch(action.type) {
+function appModeReducer(state: IAppState, action: IReducerAction): IAppState {
+	switch (action.type) {
 		case actionTypes.startEditingAction:
 			if (state.appMode === AppMode.view) {
 				const contactToEdit: Contact = action.payload;
@@ -96,9 +96,9 @@ function appModeReducer(state: IAppState, action: IReducerAction): IAppState{
 			state.appMode = AppMode.view;
 			state.error = undefined;
 			state.newContactInitialState = undefined;
-			state.thereAreDataChanges = false;
+			state.thereArePendingChanges = false;
 			return state;
-		default: 
+		default:
 			return state;
 	}
 }
@@ -111,12 +111,12 @@ function applyContactChanges(state: IAppState, contactData: IContact): boolean {
 	}
 	else {
 		if (state.appMode === AppMode.edit) {
-		state.contacts = state.contacts.map(c=>c.id === contact.id ? contact : c);
-		state.selectedContact = contact;
+			state.contacts = state.contacts.map(c => c.id === contact.id ? contact : c);
+			state.selectedContact = contact;
 		}
 		else if (state.appMode === AppMode.create) {
 			// In the app with backend id would be assigned by the backed
-			const maxId = state.contacts.reduce((maxId, c)=> c.id && maxId < c.id ? c.id : maxId, 0);
+			const maxId = state.contacts.reduce((maxId, c) => c.id && maxId < c.id ? c.id : maxId, 0);
 			contact.id = maxId + 1;
 			state.contacts = [...state.contacts, contact];
 			state.selectedContact = contact;
@@ -125,7 +125,7 @@ function applyContactChanges(state: IAppState, contactData: IContact): boolean {
 		state.error = undefined;
 		state.newContactInitialState = undefined;
 		state.appMode = AppMode.view;
-		state.thereAreDataChanges = false;
+		state.thereArePendingChanges = false;
 		return true;
 	}
 }
